@@ -14,6 +14,7 @@ extern "C" {
 
 void app_main()
 {
+    //Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
       ESP_ERROR_CHECK(nvs_flash_erase());
@@ -38,8 +39,7 @@ void app_main()
             
 
     while (1)
-    {
-        
+    {        
         camera_fb_t *pic = esp_camera_fb_get();
 
         #if DEBUG_MODE
@@ -47,8 +47,6 @@ void app_main()
             ESP_LOGI(TAG, "Picture taken! Its size was: %zu bytes", pic->len);
         #endif
 
-        // mqttPublish("camFeed", pic->buf, pic->len);
-        // client.publish("camFeed", pic->buf, pic->len);
         esp_mqtt_client_publish(client, "camFeed", (char*)pic->buf, pic->len, 0, 0);
 
         vTaskDelay(500 / portTICK_RATE_MS);
