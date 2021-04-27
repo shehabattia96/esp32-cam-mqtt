@@ -14,7 +14,7 @@ Firmware code for capturing camera feed on an ESP32 AIThinker board and publishi
     - VCC (programmer) -> 5V (ESP)
     - TX (programmer) -> RX/U0R (ESP)
     - RX (programmer) -> TX/U0T (ESP)
-  - When uploading, connect GND (ESP) -> IO0 (ESP).
+  - When uploading, connect GND (ESP) -> IO0 (ESP). Press the reset button for good measure.
 - Optional: Batteries/Battery holder or Power Supply (PS). Connect battery/PS to 5V and GND of ESP32. The power supply must be able to output at least 400mA.
 
 ### Pre-requisite extensions
