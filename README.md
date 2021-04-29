@@ -68,3 +68,4 @@ The following sources were used to design and build this program.
 
 - ESP32 Wifi events example code - author:espressif - link:[github](https://github.com/espressif/esp-idf/blob/master/examples/wifi/getting_started/station/main/station_example_main.c)
 - ESP32 events - author:espressif - link:[github](https://github.com/espressif/esp-idf/blob/master/docs/en/api-reference/system/esp_event.rst)
+- ESP32 SDCard example code - author:espressif - link:[github](https://raw.githubusercontent.com/espressif/esp-idf/master/examples/storage/sd_card/main/sd_card_example_main.c)
