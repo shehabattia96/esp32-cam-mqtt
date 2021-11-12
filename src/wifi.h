@@ -11,7 +11,7 @@
 
 static EventGroupHandle_t wifiEventGroup;
 
-enum wifiEvents {
+enum WifiEvents {
     WIFI_CONNECTING_GROUPEVENT_FLAG = BIT0,
     WIFI_CONNECTED_GROUPEVENT_FLAG = BIT1,
     WIFI_DISCONNECTED_GROUPEVENT_FLAG = BIT2,
@@ -107,6 +107,8 @@ void initWifi() {
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
     
     esp_wifi_start();
+
+    esp_wifi_set_ps(WIFI_PS_NONE);
 }
 
 #endif

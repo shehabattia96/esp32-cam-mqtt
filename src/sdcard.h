@@ -59,11 +59,13 @@ bool initSDCard()
     esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, &card);
 
     if (ret != ESP_OK) {
-        if (ret == ESP_FAIL) {
-            ESP_LOGE(TAG, "Failed to mount filesystem.");
-        } else {
-            ESP_LOGE(TAG, "Failed to initialize the card (%s). ", esp_err_to_name(ret));
-        }
+        #if DEBUG_MODE
+            if (ret == ESP_FAIL) {
+                ESP_LOGE(TAG, "Failed to mount filesystem.");
+            } else {
+                ESP_LOGE(TAG, "Failed to initialize the card (%s). ", esp_err_to_name(ret));
+            }
+        #endif
         return false;
     }
 
