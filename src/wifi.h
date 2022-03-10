@@ -5,7 +5,7 @@
 
 #include "./.environment_variables.h"
 
-#if DEBUG_MODE
+#if DEBUG
 #define TAG "wifi_H"
 #endif
 
@@ -20,7 +20,7 @@ enum WifiEvents {
 
 // when the wifi station is started and is ready, set the GROUPEVENT flag and try to connect to AP
 void wifiConnect() {
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGI(TAG, "Connecting to %s with password %s", wifiSsid, wifiPassword);
     #endif
     xEventGroupSetBits(wifiEventGroup, WIFI_CONNECTING_GROUPEVENT_FLAG);
@@ -28,7 +28,7 @@ void wifiConnect() {
 }
 // Set the EVENTGROUP flag to disconnect and try to reconnect after 5 seconds
 void onWifiDisconnected() {
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGI(TAG, "Disconnected from %s. Reconnecting in 5 seconds", wifiSsid);
     #endif
     xEventGroupSetBits(wifiEventGroup, WIFI_DISCONNECTED_GROUPEVENT_FLAG);
@@ -37,7 +37,7 @@ void onWifiDisconnected() {
 }
 // set the EVENTGROUP flag to connected
 void onWifiGotIP(void* event_data) {
-    #if DEBUG_MODE
+    #if DEBUG
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
         ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
     #endif
@@ -57,7 +57,7 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         onWifiGotIP(event_data);
     }
-    #if DEBUG_MODE
+    #if DEBUG
         else {
             if (event_base == WIFI_EVENT)
                 ESP_LOGW(TAG, "Received unhandled WIFI Event %d ", event_id);

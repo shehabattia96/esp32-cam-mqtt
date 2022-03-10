@@ -5,7 +5,7 @@
 
 #include "./.environment_variables.h"
 
-#if DEBUG_MODE
+#if DEBUG
 #define TAG "mqtt"
 #endif
 
@@ -19,7 +19,7 @@ enum MqttEvents {
 
 esp_err_t mqttEvent(esp_mqtt_event_t* event) {
 
-  #if DEBUG_MODE
+  #if DEBUG
       ESP_LOGE(TAG, "Received MQTT Event. %d", event->event_id);
   #endif
   
@@ -40,12 +40,12 @@ esp_err_t mqttEvent(esp_mqtt_event_t* event) {
 void startMQTTClient()
 {
   
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGE(TAG, "Creating event group");
     #endif
     mqttEventGroup = xEventGroupCreate();
 
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGE(TAG, "MQTT Client config");
     #endif
     esp_mqtt_client_config_t mqtt_cfg {
@@ -60,12 +60,12 @@ void startMQTTClient()
     // mqtt_cfg.client_id = mqttClientId;
     // mqtt_cfg.event_handle = &mqttEvent;
     
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGE(TAG, "Init MQTT Client");
     #endif
     client = esp_mqtt_client_init(&mqtt_cfg);
    
-    #if DEBUG_MODE
+    #if DEBUG
         ESP_LOGE(TAG, "Start MQTT Client");
     #endif
     esp_mqtt_client_start(client);

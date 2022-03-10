@@ -10,7 +10,7 @@
 
 #include "./.environment_variables.h"
 
-#if DEBUG_MODE
+#if DEBUG
 #define TAG "sdcard.h"
 #endif
 
@@ -24,7 +24,7 @@ size_t getNumberOfFiles(char* directory) {
     {
         dirent* file = readdir(dir);
         while (file) {
-            #if DEBUG_MODE
+            #if DEBUG
                 ESP_LOGE(TAG, "Filename: %s.", file->d_name);
             #endif
             numberOfFiles++;
@@ -59,7 +59,7 @@ bool initSDCard()
     esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, &card);
 
     if (ret != ESP_OK) {
-        #if DEBUG_MODE
+        #if DEBUG
             if (ret == ESP_FAIL) {
                 ESP_LOGE(TAG, "Failed to mount filesystem.");
             } else {
@@ -69,7 +69,7 @@ bool initSDCard()
         return false;
     }
 
-    #if DEBUG_MODE
+    #if DEBUG
         sdmmc_card_print_info(stdout, card);
     #endif
 

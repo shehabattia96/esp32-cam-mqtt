@@ -45,7 +45,7 @@ This was developed on VSCode1.55 with the help of the extensions below.
         #define environmentvars_H
 
         // debug options
-        #define DEBUG_MODE true // if enabled, will print log messages to console.
+        #define DEBUG true // if enabled, will print log messages to console.
 
         // mqtt
         #define mqttClientId "ESPCam"
