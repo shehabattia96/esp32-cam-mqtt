@@ -53,6 +53,8 @@ void startMQTTClient()
       .host = mqttHost,
       .port = mqttPort,
       .client_id = mqttClientId,
+      .username = mqttUser,
+      .password = mqttPassword
       // .buffer_size = 9000
     };
     // mqtt_cfg.host = mqttHost;

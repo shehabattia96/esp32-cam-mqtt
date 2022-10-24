@@ -3,3 +3,5 @@ build/
 .vscode/
 
 .environment_variables.h
+
+sdkconfig*

@@ -51,6 +51,8 @@ This was developed on VSCode1.55 with the help of the extensions below.
         #define mqttClientId "ESPCam"
         #define mqttHost "192.168.1.202"
         #define mqttPort 1883
+        #define mqttUser "admin"
+        #define mqttPassword "admin"
         // wifi
         #define wifiSsid "wifiAPtoConnectTo"
         #define wifiPassword "hunter2"
@@ -61,6 +63,7 @@ This was developed on VSCode1.55 with the help of the extensions below.
 3. Build and upload to the ESP32 using PlatformIO controls
 
     > Important: When uploading code to the AIThinker ESP32, make sure to ground the IO0 pin. If it's not grounded, you will not be able to upload code.
+    > Linux users: You have to install udev rules: https://docs.platformio.org/en/latest/core/installation/udev-rules.html
 
 ## References
 
