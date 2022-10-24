@@ -1,13 +1,12 @@
 #ifndef wifi_H
 #define wifi_H
 
+#include "freertos/event_groups.h"
+#include <esp_log.h>
+
 #include "esp_wifi.h" //espidf module
 
-#include "./.environment_variables.h"
-
-#if DEBUG
-#define TAG "wifi_H"
-#endif
+#include "../.environment_variables.h"
 
 static EventGroupHandle_t wifiEventGroup;
 
@@ -20,27 +19,22 @@ enum WifiEvents {
 
 // when the wifi station is started and is ready, set the GROUPEVENT flag and try to connect to AP
 void wifiConnect() {
-    #if DEBUG
-        ESP_LOGI(TAG, "Connecting to %s with password %s", wifiSsid, wifiPassword);
-    #endif
+    ESP_LOGD("WIFI", "Connecting to %s", wifiSsid);
     xEventGroupSetBits(wifiEventGroup, WIFI_CONNECTING_GROUPEVENT_FLAG);
     esp_wifi_connect();
 }
 // Set the EVENTGROUP flag to disconnect and try to reconnect after 5 seconds
 void onWifiDisconnected() {
-    #if DEBUG
-        ESP_LOGI(TAG, "Disconnected from %s. Reconnecting in 5 seconds", wifiSsid);
-    #endif
+    ESP_LOGD("WIFI", "Disconnected from %s. Reconnecting in 5 seconds", wifiSsid);
     xEventGroupSetBits(wifiEventGroup, WIFI_DISCONNECTED_GROUPEVENT_FLAG);
     vTaskDelay(5000 / portTICK_RATE_MS);
     wifiConnect();
 }
 // set the EVENTGROUP flag to connected
 void onWifiGotIP(void* event_data) {
-    #if DEBUG
-        ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
-    #endif
+    ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
+    ESP_LOGD("WIFI", "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+    
     xEventGroupSetBits(wifiEventGroup, WIFI_CONNECTED_GROUPEVENT_FLAG);
 }
 
@@ -60,9 +54,9 @@ static void event_handler(void* arg, esp_event_base_t event_base,
     #if DEBUG
         else {
             if (event_base == WIFI_EVENT)
-                ESP_LOGW(TAG, "Received unhandled WIFI Event %d ", event_id);
+                ESP_LOGW("WIFI", "Received unhandled WIFI Event %d ", event_id);
             if (event_base == IP_EVENT)
-                ESP_LOGW(TAG, "Received unhandled IP Event %d ", event_id);
+                ESP_LOGW("WIFI", "Received unhandled IP Event %d ", event_id);
         }
     #endif
 }

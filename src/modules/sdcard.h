@@ -8,11 +8,7 @@
 #include "sdmmc_cmd.h"
 #include "driver/sdmmc_host.h"
 
-#include "./.environment_variables.h"
-
-#if DEBUG
-#define TAG "sdcard.h"
-#endif
+#include "../.environment_variables.h"
 
 #define MOUNT_POINT "/sdcard"
 
@@ -25,7 +21,7 @@ size_t getNumberOfFiles(char* directory) {
         dirent* file = readdir(dir);
         while (file) {
             #if DEBUG
-                ESP_LOGE(TAG, "Filename: %s.", file->d_name);
+                ESP_LOGE("SDCARD", "Filename: %s.", file->d_name);
             #endif
             numberOfFiles++;
             file = readdir(dir);
@@ -59,13 +55,11 @@ bool initSDCard()
     esp_err_t ret = esp_vfs_fat_sdmmc_mount(MOUNT_POINT, &host, &slot_config, &mount_config, &card);
 
     if (ret != ESP_OK) {
-        #if DEBUG
-            if (ret == ESP_FAIL) {
-                ESP_LOGE(TAG, "Failed to mount filesystem.");
-            } else {
-                ESP_LOGE(TAG, "Failed to initialize the card (%s). ", esp_err_to_name(ret));
-            }
-        #endif
+        if (ret == ESP_FAIL) {
+            ESP_LOGE("SDCARD", "Failed to mount filesystem.");
+        } else {
+            ESP_LOGE("SDCARD", "Failed to initialize the card (%s). ", esp_err_to_name(ret));
+        }
         return false;
     }
 
@@ -77,7 +71,7 @@ bool initSDCard()
 
     // // All done, unmount partition and disable SDMMC or SPI peripheral
     // esp_vfs_fat_sdcard_unmount(mount_point, card);
-    // ESP_LOGI(TAG, "Card unmounted");
+    // ESP_LOGI("SDCARD", "Card unmounted");
 }
 
 #endif
